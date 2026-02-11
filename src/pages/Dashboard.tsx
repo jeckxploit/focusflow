@@ -169,7 +169,7 @@ export default function Dashboard() {
                 <h2 className="text-2xl font-bold mb-2">Siap untuk Hari Ke-2?</h2>
                 <p className="text-zinc-500">Besok kita akan meng-clone mesin ini menjadi aplikasi Idul Fitri Gallery.</p>
               </div>
-              <Button onClick={() => toast('Sabar ya, lanjut besok! 🔥')} className="w-full md:w-auto px-10 rounded-full py-4 text-sm uppercase tracking-widest">
+              <Button onClick={() => navigate('/projects')} className="w-full md:w-auto px-10 rounded-full py-4 text-sm uppercase tracking-widest">
                 Mulai Produksi
               </Button>
            </div>
