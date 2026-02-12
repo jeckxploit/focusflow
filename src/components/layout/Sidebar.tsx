@@ -65,14 +65,19 @@ export default function Sidebar() {
                       key={item.label}
                       to={item.href}
                       onClick={() => window.innerWidth < 1024 && toggleSidebar()}
-                      className={`flex items-center gap-4 px-5 py-4 rounded-2xl transition-all group ${
-                        isActive 
-                          ? 'bg-white text-black shadow-[0_0_20px_rgba(255,255,255,0.1)]' 
-                          : 'text-zinc-500 hover:text-white hover:bg-zinc-900/50'
+                      className={`relative flex items-center gap-4 px-5 py-4 rounded-2xl transition-all group ${
+                        isActive ? 'text-black' : 'text-zinc-500 hover:text-white'
                       }`}
                     >
-                      <Icon size={18} className={isActive ? 'text-black' : 'text-zinc-500 group-hover:text-white'} />
-                      <span className="text-xs font-bold uppercase tracking-widest">{item.label}</span>
+                      {isActive && (
+                        <motion.div
+                          layoutId="activeNav"
+                          className="absolute inset-0 bg-white rounded-2xl shadow-[0_0_20px_rgba(255,255,255,0.1)]"
+                          transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                        />
+                      )}
+                      <Icon size={18} className={`relative z-10 ${isActive ? 'text-black' : 'text-zinc-500 group-hover:text-white'}`} />
+                      <span className="relative z-10 text-xs font-bold uppercase tracking-widest">{item.label}</span>
                     </Link>
                   )
                 })}

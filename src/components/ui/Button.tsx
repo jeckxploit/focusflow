@@ -12,10 +12,10 @@ export function Button({
   size = 'md',
   ...props 
 }: ButtonProps) {
-  const baseStyles = "inline-flex items-center justify-center font-black uppercase italic tracking-widest transition-all active:scale-95 disabled:opacity-50 disabled:pointer-events-none"
+  const baseStyles = "relative inline-flex items-center justify-center font-black uppercase italic tracking-widest transition-all active:scale-95 disabled:opacity-50 disabled:pointer-events-none overflow-hidden"
   
   const variants = {
-    primary: "bg-white text-black hover:bg-zinc-200 shadow-[0_0_20px_rgba(255,255,255,0.1)]",
+    primary: "bg-white text-black hover:bg-zinc-200",
     secondary: "bg-zinc-900 text-white border border-zinc-800 hover:bg-zinc-800 hover:border-zinc-700",
     outline: "bg-transparent text-white border border-zinc-800 hover:border-zinc-500"
   }
@@ -28,7 +28,10 @@ export function Button({
 
   return (
     <motion.button
-      whileHover={{ y: -2 }}
+      whileHover={{ 
+        y: -2,
+        boxShadow: variant === 'primary' ? "0 0 25px rgba(255,255,255,0.15)" : "0 0 20px rgba(0,0,0,0.4)"
+      }}
       whileTap={{ scale: 0.98 }}
       className={`${baseStyles} ${variants[variant]} ${sizes[size]} ${className}`}
       {...props}

@@ -46,8 +46,9 @@ export default function Dashboard() {
       {/* Header */}
       <header className="flex flex-col md:flex-row justify-between items-start md:items-end gap-8 mb-20">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
         >
           <div className="flex items-center gap-3 text-zinc-600 text-[10px] font-bold uppercase tracking-[0.5em] mb-6">
             <Activity size={14} /> System Mainframe v1.0
@@ -75,10 +76,11 @@ export default function Dashboard() {
             key={i}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: i * 0.1 }}
-            className="bg-zinc-950 border border-zinc-900 p-10 rounded-[2.5rem] hover:border-zinc-700 transition-all group"
+            transition={{ delay: i * 0.1, duration: 0.5 }}
+            whileHover={{ y: -8, borderColor: "rgba(255,255,255,0.2)" }}
+            className="bg-zinc-950 border border-zinc-900 p-10 rounded-[2.5rem] transition-all duration-300 group cursor-default"
           >
-            <stat.icon className="text-zinc-700 group-hover:text-white mb-8 transition-colors" size={28} />
+            <stat.icon className="text-zinc-700 group-hover:text-white mb-8 transition-colors duration-300" size={28} />
             <p className="text-zinc-600 text-[10px] font-bold uppercase tracking-[0.3em] mb-2">{stat.label}</p>
             <p className="text-4xl font-black tracking-tighter uppercase italic">{stat.value}</p>
           </motion.div>
@@ -92,7 +94,7 @@ export default function Dashboard() {
             <h2 className="text-2xl font-black tracking-tight uppercase italic flex items-center gap-4">
               <div className="w-2 h-8 bg-white rounded-full" /> Production Line
             </h2>
-            <button onClick={fetchPosts} className="text-[10px] font-bold text-zinc-700 hover:text-white uppercase tracking-[0.3em]">
+            <button onClick={fetchPosts} className="text-[10px] font-bold text-zinc-700 hover:text-white uppercase tracking-[0.3em] transition-colors">
               Sync Engine
             </button>
           </div>
@@ -125,10 +127,11 @@ export default function Dashboard() {
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, scale: 0.95 }}
-                    className="bg-zinc-950 border border-zinc-900 p-8 rounded-[2rem] flex items-center justify-between group hover:border-zinc-600 transition-all"
+                    whileHover={{ x: 10, borderColor: "rgba(255,255,255,0.15)" }}
+                    className="bg-zinc-950 border border-zinc-900 p-8 rounded-[2rem] flex items-center justify-between group transition-all duration-300"
                   >
                     <div className="flex items-center gap-8">
-                      <div className="w-16 h-16 rounded-2xl bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-700 group-hover:text-white group-hover:border-zinc-500 transition-all">
+                      <div className="w-16 h-16 rounded-2xl bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-700 group-hover:text-white group-hover:border-zinc-500 transition-all duration-500">
                         <Smartphone size={28} />
                       </div>
                       <div>
@@ -150,7 +153,10 @@ export default function Dashboard() {
         </div>
 
         <div className="space-y-10">
-          <div className="bg-white text-black p-12 rounded-[3rem] shadow-[0_0_50px_rgba(255,255,255,0.1)] group">
+          <motion.div 
+            whileHover={{ y: -5 }}
+            className="bg-white text-black p-12 rounded-[3rem] shadow-[0_0_50px_rgba(255,255,255,0.1)] group cursor-default"
+          >
             <Sparkles className="mb-8" size={32} />
             <h3 className="text-3xl font-black tracking-tight mb-6 leading-none">PRO<br/>FACTORY</h3>
             <p className="text-black/60 text-sm leading-relaxed mb-10 font-bold uppercase tracking-tighter">
@@ -159,7 +165,7 @@ export default function Dashboard() {
             <Button variant="secondary" className="w-full bg-black text-white hover:bg-zinc-800 border-none">
               DOCS
             </Button>
-          </div>
+          </motion.div>
 
           <div className="bg-zinc-950 border border-zinc-900 p-12 rounded-[3rem]">
             <h3 className="text-[10px] font-bold uppercase tracking-[0.5em] mb-10 text-zinc-700 flex items-center gap-3">
