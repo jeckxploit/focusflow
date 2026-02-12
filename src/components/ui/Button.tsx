@@ -1,42 +1,41 @@
-import { motion } from 'framer-motion'
+import { motion, HTMLMotionProps } from 'framer-motion'
+import React from 'react'
 
-interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary' | 'outline'
+interface ButtonProps extends Omit<HTMLMotionProps<"button">, "ref"> {
+  variant?: 'primary' | 'secondary' | 'outline' | 'ghost'
   size?: 'sm' | 'md' | 'lg'
+  children: React.ReactNode
 }
 
-export function Button({ 
-  children, 
-  className = '', 
-  variant = 'primary', 
-  size = 'md',
-  ...props 
-}: ButtonProps) {
-  const baseStyles = "relative inline-flex items-center justify-center font-black uppercase italic tracking-widest transition-all active:scale-95 disabled:opacity-50 disabled:pointer-events-none overflow-hidden"
-  
-  const variants = {
-    primary: "bg-white text-black hover:bg-zinc-200",
-    secondary: "bg-zinc-900 text-white border border-zinc-800 hover:bg-zinc-800 hover:border-zinc-700",
-    outline: "bg-transparent text-white border border-zinc-800 hover:border-zinc-500"
-  }
+export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ variant = 'primary', size = 'md', className = '', children, ...props }, ref) => {
+    const baseStyles = "inline-flex items-center justify-center font-black uppercase tracking-widest transition-all active:scale-95 disabled:opacity-50 disabled:pointer-events-none"
+    
+    const variants = {
+      primary: "bg-white text-black hover:bg-zinc-200 shadow-[0_0_20px_rgba(255,255,255,0.1)]",
+      secondary: "bg-zinc-900 text-white border border-zinc-800 hover:border-zinc-600",
+      outline: "bg-transparent text-white border-2 border-zinc-800 hover:border-white",
+      ghost: "bg-transparent text-zinc-500 hover:text-white hover:bg-zinc-900"
+    }
 
-  const sizes = {
-    sm: "px-4 py-2 text-[10px] rounded-xl",
-    md: "px-8 py-4 text-xs rounded-2xl",
-    lg: "px-10 py-5 text-sm rounded-[2rem]"
-  }
+    const sizes = {
+      sm: "px-4 py-2 text-[10px] rounded-xl",
+      md: "px-6 py-3 text-xs rounded-2xl",
+      lg: "px-8 py-4 text-sm rounded-[1.5rem]"
+    }
 
-  return (
-    <motion.button
-      whileHover={{ 
-        y: -2,
-        boxShadow: variant === 'primary' ? "0 0 25px rgba(255,255,255,0.15)" : "0 0 20px rgba(0,0,0,0.4)"
-      }}
-      whileTap={{ scale: 0.98 }}
-      className={`${baseStyles} ${variants[variant]} ${sizes[size]} ${className}`}
-      {...props}
-    >
-      {children}
-    </motion.button>
-  )
-}
+    return (
+      <motion.button
+        ref={ref}
+        whileHover={{ y: -2 }}
+        whileTap={{ scale: 0.98 }}
+        className={`${baseStyles} ${variants[variant]} ${sizes[size]} ${className}`}
+        {...props}
+      >
+        {children}
+      </motion.button>
+    )
+  }
+)
+
+Button.displayName = 'Button'

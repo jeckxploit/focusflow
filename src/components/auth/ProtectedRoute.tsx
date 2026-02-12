@@ -2,7 +2,7 @@ import { Navigate } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { supabase } from "../../services/supabase"
 
-export default function ProtectedRoute({ children }: { children: JSX.Element }) {
+export default function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true)
   const [session, setSession] = useState<any>(null)
 
@@ -16,9 +16,9 @@ export default function ProtectedRoute({ children }: { children: JSX.Element }) 
     getSession()
   }, [])
 
-  if (loading) return <div className="p-6">Loading...</div>
+  if (loading) return <div className="p-6 text-zinc-500 uppercase font-black italic">Authenticating...</div>
 
   if (!session) return <Navigate to="/login" replace />
 
-  return children
+  return <>{children}</>
 }
