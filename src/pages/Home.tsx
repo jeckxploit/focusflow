@@ -17,8 +17,8 @@ export default function Home() {
         setLoading(false)
       })
       .catch((error) => {
-        console.error(error)
-        toast.error("Gagal memuat data feed")
+        console.error("[Home] Error loading feed:", error)
+        toast.error("Gagal memuat data feed: " + error.message)
         setLoading(false)
       })
   }, [])

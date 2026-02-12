@@ -7,7 +7,10 @@ export const getPosts = async (userId: string) => {
     .eq("user_id", userId)
     .order("created_at", { ascending: false })
 
-  if (error) throw new Error(error.message)
+  if (error) {
+    console.error("[postService] Error fetching posts:", error)
+    throw new Error(error.message)
+  }
   return data
 }
 
@@ -19,7 +22,10 @@ export const getPublicPosts = async (userId: string) => {
     .eq("status", "published")
     .order("created_at", { ascending: false })
 
-  if (error) throw new Error(error.message)
+  if (error) {
+    console.error("[postService] Error fetching public posts:", error)
+    throw new Error(error.message)
+  }
   return data
 }
 
@@ -36,7 +42,10 @@ export const createPost = async (title: string, content: string, status: 'draft'
     },
   ])
 
-  if (error) throw new Error(error.message)
+  if (error) {
+    console.error("[postService] Error creating post:", error)
+    throw new Error(error.message)
+  }
   return data
 }
 
@@ -46,7 +55,10 @@ export const updatePost = async (id: string, updates: { title?: string, content?
     .update(updates)
     .eq("id", id)
     
-  if (error) throw new Error(error.message)
+  if (error) {
+    console.error("[postService] Error updating post:", error)
+    throw new Error(error.message)
+  }
 }
 
 export const deletePost = async (id: string, userId: string) => {
@@ -56,5 +68,8 @@ export const deletePost = async (id: string, userId: string) => {
     .eq("id", id)
     .eq("user_id", userId) 
     
-  if (error) throw new Error(error.message)
+  if (error) {
+    console.error("[postService] Error deleting post:", error)
+    throw new Error(error.message)
+  }
 }

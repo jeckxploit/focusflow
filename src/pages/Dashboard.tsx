@@ -24,7 +24,8 @@ export default function Dashboard() {
       const data = await getPosts(user!.id)
       setPosts(data || [])
     } catch (error: any) {
-      toast.error('Sync Failed')
+      console.error("[Dashboard] Sync Failed:", error)
+      toast.error('Sync Failed: ' + error.message)
     } finally {
       setIsLoadingPosts(false)
     }
@@ -36,8 +37,9 @@ export default function Dashboard() {
       await deletePost(id, user!.id)
       setPosts(posts.filter(p => p.id !== id))
       toast.success('Terminated', { id: loadingToast })
-    } catch (error) {
-      toast.error('Action Failed', { id: loadingToast })
+    } catch (error: any) {
+      console.error("[Dashboard] Delete Failed:", error)
+      toast.error('Action Failed: ' + error.message, { id: loadingToast })
     }
   }
 

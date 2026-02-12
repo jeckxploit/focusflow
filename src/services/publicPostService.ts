@@ -7,7 +7,10 @@ export const getAllPublicPosts = async () => {
     .eq("status", "published")
     .order("created_at", { ascending: false })
 
-  if (error) throw new Error(error.message)
+  if (error) {
+    console.error("[publicPostService] Error fetching all public posts:", error)
+    throw new Error(error.message)
+  }
   return data
 }
 
@@ -18,6 +21,9 @@ export const getPostById = async (id: string) => {
     .eq("id", id)
     .single()
 
-  if (error) throw new Error(error.message)
+  if (error) {
+    console.error("[publicPostService] Error fetching post by ID:", error)
+    throw new Error(error.message)
+  }
   return data
 }
