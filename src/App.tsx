@@ -8,6 +8,8 @@ import Register from './pages/Register'
 import Projects from './pages/Projects'
 import CreatePost from './pages/CreatePost'
 import PublicBlog from './pages/PublicBlog'
+import Home from './pages/Home'
+import PostDetail from './pages/PostDetail'
 
 function App() {
   return (
@@ -25,10 +27,11 @@ function App() {
         }} 
       />
       <Routes>
-        <Route path="/" element={<Navigate to="/login" />} />
+        <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/blog/:userId" element={<PublicBlog />} />
+        <Route path="/post/:slug" element={<PostDetail />} />
         
         <Route 
           path="/dashboard" 
