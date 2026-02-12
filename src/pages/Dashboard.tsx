@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from 'framer-motion'
-import { LogOut, Shield, Smartphone, Zap, User, Upload, Trash2, FileText, Loader2 } from 'lucide-react'
+import { LogOut, Shield, Smartphone, Zap, User, Upload, Trash2, FileText, Loader2, Plus } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
@@ -39,9 +39,10 @@ export default function Dashboard() {
   }
 
   const fetchPosts = async () => {
+    if (!user) return
     setIsLoadingPosts(true)
     try {
-      const data = await getPosts()
+      const data = await getPosts(user.id)
       setPosts(data || [])
     } catch (error: any) {
       toast.error('Gagal memuat data produksi')
@@ -51,9 +52,10 @@ export default function Dashboard() {
   }
 
   const handleDeletePost = async (id: string) => {
+    if (!user) return
     const loadingToast = toast.loading('Menghapus data...')
     try {
-      await deletePost(id)
+      await deletePost(id, user.id)
       setPosts(posts.filter(post => post.id !== id))
       toast.success('Data berhasil dihapus', { id: loadingToast })
     } catch (error: any) {
@@ -148,9 +150,16 @@ export default function Dashboard() {
           <motion.h1 variants={itemVariants} className="text-5xl md:text-7xl font-black tracking-tighter mb-4 leading-none">
             HALO, <span className="text-zinc-500">{user?.email?.split('@')[0]}!</span>
           </motion.h1>
-          <motion.p variants={itemVariants} className="text-zinc-500 max-w-xl text-lg leading-relaxed">
-            Template kamu sudah terhubung ke mesin produksi. Gunakan panel di bawah untuk mulai membangun 30 aplikasi PWA.
-          </motion.p>
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <motion.p variants={itemVariants} className="text-zinc-500 max-w-xl text-lg leading-relaxed">
+              Template kamu sudah terhubung ke mesin produksi. Gunakan panel di bawah untuk mulai membangun 30 aplikasi PWA.
+            </motion.p>
+            <motion.div variants={itemVariants}>
+              <Button onClick={() => navigate('/create')} className="flex items-center gap-2 px-8 py-4 rounded-2xl">
+                <Plus size={20} /> NEW PRODUCTION
+              </Button>
+            </motion.div>
+          </div>
         </motion.header>
 
         <motion.div 
